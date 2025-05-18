@@ -33,13 +33,14 @@ if __name__ == '__main__':
         write_lines = []
         lines = open(file, encoding='utf8').readlines()
         for index, line in enumerate(lines):
-            if (line[0] == '○') and ('^' not in line):
-                pair = convert2cmp(lines[index : index + 2])
-                write_lines.extend(pair)
-            elif (line[0] == '●') and ('^' not in line):
-                pass
-            else:
-                write_lines.append(line)
+            if ('^' not in line) and (len(line) > 10 and line[10] != '【'):
+                if line[0] == '○':
+                    pair = convert2cmp(lines[index : index + 2])
+                    write_lines.extend(pair)
+                    continue
+                elif line[0] == '●':
+                    continue
+            write_lines.append(line)
         open(
             op.join(merged_script, op.basename(file)), 'w', encoding='utf8'
         ).writelines(write_lines)
