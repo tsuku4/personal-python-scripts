@@ -1,10 +1,12 @@
-import os
+import os, sys
 import os.path as op
 
 # 使用说明：从script_cn 转入 script_cn_with_jp
 
-translated_script = 'script_cn'
-merged_script = 'script_cn_with_jp'
+root = sys.argv[1]
+
+translated_script = op.join(root, 'script_cn')
+cmp_script = op.join(root, 'script_cn_with_jp')
 
 
 # 遍历文件夹，返回文件列表
@@ -27,7 +29,7 @@ if __name__ == '__main__':
     files = walk(translated_script)
 
     if len(files) > 0:
-        os.makedirs(merged_script, exist_ok=True)
+        os.makedirs(cmp_script, exist_ok=True)
 
     for file in files:
         write_lines = []
@@ -41,7 +43,7 @@ if __name__ == '__main__':
                 elif line[0] == '●':
                     continue
             write_lines.append(line)
-        open(
-            op.join(merged_script, op.basename(file)), 'w', encoding='utf8'
-        ).writelines(write_lines)
+        open(op.join(cmp_script, op.basename(file)), 'w', encoding='utf8').writelines(
+            write_lines
+        )
         print(file, 'done')

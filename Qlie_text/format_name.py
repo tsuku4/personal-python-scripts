@@ -1,11 +1,13 @@
-import os
+import os, sys
 import os.path as op
 
 # 汉化名字统一
 # 使用说明：从script_cn 转入 script_cn_format
 
-translated_script = 'script_cn'
-format_script = 'script_cn_format'
+root = sys.argv[1]
+
+translated_script = op.join(root, 'script_cn')
+format_script = op.join(root, 'script_cn_format')
 
 
 jp_cn_name_dict = {

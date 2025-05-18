@@ -1,4 +1,5 @@
-import os, re, struct
+import os, re, struct, sys
+import os.path as op
 from typing import List
 
 # 使用说明
@@ -8,24 +9,26 @@ from typing import List
 #   从 scenario_cned 转入 script_cned, selection_cned
 #   从 script_jp, selection_jp, script_cned, selection_cned 转入 script_merge, selection_merge
 
+root = sys.argv[1]
+
 # 原始的scenario
-original_scenario = 'scenario_jp'
-processed_scenario = 'scenario_done'
+original_scenario = op.join(root, 'scenario_jp')
+processed_scenario = op.join(root, 'scenario_done')
 
-extracted_script = 'script_jp'
-translated_script = 'script_cn'
+extracted_script = op.join(root, 'script_jp')
+translated_script = op.join(root, 'script_cn')
 
-extracted_selection = 'selection_jp'
-translated_selection = 'selection_cn'
+extracted_selection = op.join(root, 'selection_jp')
+translated_selection = op.join(root, 'selection_cn')
 
 # 如果要提取汉化过的scenario
-original_scenario_cned = 'scenario_cned'
+original_scenario_cned = op.join(root, 'scenario_cned')
 
-extracted_script_cned = 'script_cned'
-extracted_selection_cned = 'selection_cned'
+extracted_script_cned = op.join(root, 'script_cned')
+extracted_selection_cned = op.join(root, 'selection_cned')
 
-merged_script = 'script_merged'
-merged_selection = 'selection_merged'
+merged_script = op.join(root, 'script_merged')
+merged_selection = op.join(root, 'selection_merged')
 
 
 # 遍历文件夹，返回文件列表
