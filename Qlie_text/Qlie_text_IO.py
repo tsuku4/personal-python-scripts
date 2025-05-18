@@ -27,6 +27,7 @@ extracted_selection_cned = 'selection_cned'
 merged_script = 'script_merged'
 merged_selection = 'selection_merged'
 
+
 # 遍历文件夹，返回文件列表
 def walk(adr: str) -> List[str]:
     mylist = []
@@ -186,7 +187,7 @@ class Text_in:
 
     @staticmethod
     def StringFilter(string: str) -> str:
-        lst = re.findall('\[.+?\]', string)
+        lst: List[str] = re.findall('[.+?]', string)
         if not lst:
             return string
 
