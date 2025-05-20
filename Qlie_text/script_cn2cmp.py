@@ -1,5 +1,6 @@
 import os, sys
 import os.path as op
+from typing import Optional
 
 # 使用说明：从script_cn 转入 script_cn_with_jp
 
@@ -19,9 +20,14 @@ def walk(adr: str) -> list[str]:
     return mylist
 
 
-def convert2cmp(jp_cn: list[str]) -> list[str]:
+def convert2cmp(jp_cn: list[str], debug_file: Optional[str] = None) -> list[str]:
     jp = jp_cn[0].rstrip()
     cn_with_jp = jp_cn[1][:-1] + '||' + jp[10:] + '\n'
+
+    if debug_file is not None:
+        No = int(jp[1 : jp.index('○', 1)])
+        cn_with_jp = cn_with_jp[:-1] + '||' + debug_file + '.' + str(No) + '\n'
+
     return [jp_cn[0], cn_with_jp]
 
 
@@ -32,12 +38,17 @@ if __name__ == '__main__':
         os.makedirs(cmp_script, exist_ok=True)
 
     for file in files:
+        filename = op.splitext(op.basename(file))[0]
         write_lines = []
         lines = open(file, encoding='utf8').readlines()
         for index, line in enumerate(lines):
-            if ('^' not in line) and (len(line) > 10 and line[10] != '【'):
+            if (
+                ('^' not in line)
+                and ('\\' not in line)
+                and (len(line) > 10 and line[10] != '【')
+            ):
                 if line[0] == '○':
-                    pair = convert2cmp(lines[index : index + 2])
+                    pair = convert2cmp(lines[index : index + 2], filename)
                     write_lines.extend(pair)
                     continue
                 elif line[0] == '●':
