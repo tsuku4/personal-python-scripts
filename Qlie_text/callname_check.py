@@ -36,7 +36,7 @@ def walk(adr: str) -> list[str]:
 def check(jp_cn_line: list[str]) -> str:
     jp_line = jp_cn_line[0]
     cn_line = jp_cn_line[1]
-    second_maru = jp_line[1:].index('○')
+    second_maru = jp_line[1:].index('○') + 1
     index = int(jp_line[1:second_maru])
 
     for jp_name, cn_name in callname_dict.items():
@@ -65,3 +65,4 @@ if __name__ == '__main__':
         print(file, 'done')
 
     print('total:', sum)
+
