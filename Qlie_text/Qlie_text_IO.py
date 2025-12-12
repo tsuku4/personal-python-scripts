@@ -177,10 +177,15 @@ class Text_in:
     # 将txt转换成文本列表
     @staticmethod
     def makestr(lines: List[str]) -> List[str]:
+        cn_i = -1
         string_list = []
         for index, line in enumerate(lines):
             s = re.match('●[0-9A-Fa-f]+●', line)
             if s:
+                now = int(line[1:9])
+                assert now == cn_i + 1, now
+                cn_i = now
+
                 string_list.append(line[10:])
             elif line == '\n' or re.match('○[0-9A-Fa-f]+○', line):
                 pass
@@ -190,7 +195,7 @@ class Text_in:
 
     @staticmethod
     def StringFilter(string: str) -> str:
-        lst: List[str] = re.findall('[.+?]', string)
+        lst = re.findall('\[.+?\]', string)
         if not lst:
             return string
 
